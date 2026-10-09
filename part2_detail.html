@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감자 마켓 - 상품 상세 모달(화면 2) 미리보기 및 테스트</title>
+  <link rel="stylesheet" href="part2_detail.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+      background-color: #F8F5F0;
+      color: #3D2B1F;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .demo-container {
+      max-width: 720px;
+      width: 100%;
+    }
+
+    .header-box {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header-box h1 {
+      margin: 0 0 8px 0;
+      color: #6F4E37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 1.8rem;
+    }
+
+    .header-box p {
+      margin: 0;
+      color: #8C7A6B;
+      font-size: 1rem;
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .sample-card {
+      background: #FFFFFF;
+      border: 1px solid #E8D8C8;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(111, 78, 55, 0.06);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .sample-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(111, 78, 55, 0.14);
+      border-color: #9C6644;
+    }
+
+    .sample-img-thumb {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+      background-color: #F7EFE5;
+    }
+
+    .sample-card-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: #3D2B1F;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sample-card-price {
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #8D5B4C;
+      margin: 0;
+    }
+
+    .sample-card-btn {
+      margin-top: auto;
+      background-color: #8D5B4C;
+      color: #FFFFFF;
+      border: none;
+      padding: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .sample-card-btn:hover {
+      background-color: #7B4A3B;
+    }
+
+    .info-box {
+      background: #FAF7F2;
+      border: 1px solid #E8D8C8;
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 0.9rem;
+      color: #6F4E37;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-container">
+    <div class="header-box">
+      <h1><span>🥔</span> 감자 마켓 - 상품 상세 모달 테스트</h1>
+      <p>아래 카드나 버튼을 클릭하여 상품 상세 정보 팝업을 열어보세요.</p>
+    </div>
+
+    <div class="sample-grid" id="sampleGrid">
+      <!-- 자바스크립트로 샘플 카드 렌더링 -->
+    </div>
+
+    <div class="info-box">
+      <strong>💡 사용법 안내:</strong><br>
+      • 상품 객체를 전달하여 열기: <code>window.openProductDetail(product)</code><br>
+      • 팝업 닫기: <code>window.closeProductDetail()</code> (또는 ESC 키 / 모달 배경 클릭 / ✕ 버튼)<br>
+      • 이벤트 연동: <code>window.addEventListener('gamza:open-chat', (e) => ...)</code> 로 채팅 연동 지원<br>
+      • 반응형: 브라우저 창 너비를 640px 이하로 줄이면 모바일용 바텀 시트 스타일로 변환됩니다.
+    </div>
+  </div>
+
+  <!-- 파트 2 상세 모달 스크립트 로드 -->
+  <script src="part2_detail.js"></script>
+  <script>
+    // 다양한 상태의 샘플 상품 데이터
+    const sampleProducts = [
+      {
+        id: 'sample_1',
+        title: '포슬포슬 햇감자 5kg (강원도 고랭지)',
+        category: '기타',
+        price: 15000,
+        location: '역삼동 강남파이낸스센터 앞',
+        status: '판매중',
+        imageUrl: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=600&auto=format&fit=crop&q=80',
+        createdAt: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+        createdTimeStr: '15분 전',
+        description: '강원도 홍천에서 갓 수확해 온 포슬포슬한 햇감자입니다!\n\n크기도 적당하고 쪄 먹으면 밤처럼 달고 맛있어요 🥔\n박스 그대로 미개봉 상태입니다.\n\n역삼역 3번 출구 근처에서 직거래 희망합니다!',
+        likes: 12,
+        chats: 4,
+        isLiked: false,
+        seller: {
+          nickname: '감자농부짱',
+          profileImg: '',
+          location: '역삼1동',
+          temperature: 42.1
+        }
+      },
+      {
+        id: 'sample_2',
+        title: '에어프라이어 5L 감자튀김용 (상태 최상)',
+        category: '생활가전',
+        price: 28000,
+        location: '역삼역 2번 출구',
+        status: '예약중',
+        imageUrl: 'https://images.unsplash.com/photo-1585659722983-3a675dabf23d?w=600&auto=format&fit=crop&q=80',
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+        createdTimeStr: '2시간 전',
+        description: '감자튀김이나 고구마 구워 먹을 때 딱 좋은 5L 에어프라이어입니다.\n이사로 인해 짐 정리하면서 저렴하게 내놓습니다.\n\n내부 코팅 벗겨짐 없고 정상 작동 확인했습니다.\n박스는 없고 본체와 전원선만 있습니다.',
+        likes: 5,
+        chats: 8,
+        isLiked: true,
+        seller: {
+          nickname: '해피감자',
+          profileImg: '',
+          location: '역삼동',
+          temperature: 36.5
+        }
+      },
+      {
+        id: 'sample_3',
+        title: '[나눔] 읽지 않은 감자 요리 레시피북',
+        category: '도서/티켓',
+        price: 0,
+        location: '선릉역 5번 출구 부근',
+        status: '판매중',
+        imageUrl: '',
+        createdAt: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+        createdTimeStr: '45분 전',
+        description: '선물 받고 한번도 펼쳐보지 않은 새 책입니다.\n다양한 감자 요리와 베이킹 방법이 수록되어 있어요.\n필요하신 이웃분께 따뜻하게 무료 나눔합니다!',
+        likes: 18,
+        chats: 11,
+        isLiked: false,
+        seller: {
+          nickname: '나눔요정',
+          profileImg: '',
+          location: '삼성동',
+          temperature: 48.0
+        }
+      },
+      {
+        id: 'sample_4',
+        title: '아이패드 에어 5세대 64GB 스타라이트',
+        category: '디지털 기기',
+        price: 520000,
+        location: '강남역 11번 출구',
+        status: '거래완료',
+        imageUrl: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop&q=80',
+        createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+        createdTimeStr: '1일 전',
+        description: '배터리 효율 96%로 실사용 기간 매우 짧습니다.\n구매하자마자 필름 및 케이스 장착하여 기스 전혀 없습니다.\n풀박스 구성입니다.',
+        likes: 24,
+        chats: 15,
+        isLiked: false,
+        seller: {
+          nickname: '테크감자',
+          profileImg: '',
+          location: '서초동',
+          temperature: 37.8
+        }
+      }
+    ];
+
+    // 카드 목록 렌더링
+    const grid = document.getElementById('sampleGrid');
+    sampleProducts.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'sample-card';
+      const priceText = product.price === 0 ? '무료나눔' : product.price.toLocaleString('ko-KR') + '원';
+      const imgSrc = product.imageUrl || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="100%" height="100%" fill="%23F7EFE5"/><ellipse cx="150" cy="100" rx="70" ry="50" fill="%23DDB892"/><text x="150" y="105" font-size="28" text-anchor="middle">🥔</text></svg>';
+
+      card.innerHTML = `
+        <img src="${imgSrc}" alt="${product.title}" class="sample-img-thumb" />
+        <h3 class="sample-card-title">${product.title}</h3>
+        <p class="sample-card-price">${priceText} <span style="font-size:0.8rem; font-weight:normal; color:#8C7A6B;">(${product.status})</span></p>
+        <button class="sample-card-btn">상세보기 팝업 열기</button>
+      `;
+
+      card.addEventListener('click', () => {
+        window.openProductDetail(product);
+      });
+
+      grid.appendChild(card);
+    });
+
+    // 채팅 이벤트 연동 확인용 리스너
+    window.addEventListener('gamza:open-chat', (e) => {
+      console.log('채팅 시작 이벤트 수신:', e.detail);
+    });
+  </script>
+</body>
+</html>

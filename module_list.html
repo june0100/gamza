@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감자 마켓 - 이웃과 함께 나누는 따뜻한 중고거래</title>
+
+  <!-- 파트 1: 상품목록 스타일 -->
+  <link rel="stylesheet" href="part1_list.css" />
+
+  <!-- 파트 3: 글쓰기 모달 스타일 (함께 로드 시 글쓰기 모달 기능 연동) -->
+  <link rel="stylesheet" href="part3_write.css" />
+</head>
+<body>
+
+  <!-- ========================================================
+       1. 헤더 GNB (Global Navigation Bar)
+       ======================================================== -->
+  <header class="gamza-header">
+    <div class="gamza-container gamza-header-inner">
+      <!-- 🥔 로고 -->
+      <a href="#" class="gamza-logo" id="gamzaLogoBtn" aria-label="감자 마켓 홈으로 이동">
+        <span class="gamza-logo-emoji">🥔</span>
+        <span>감자</span>
+        <span class="gamza-logo-badge">마켓</span>
+      </a>
+
+      <!-- 통합 검색창 -->
+      <div class="gamza-search-wrapper">
+        <div class="gamza-search-bar">
+          <span class="gamza-search-icon" aria-hidden="true">🔍</span>
+          <input 
+            type="text" 
+            id="gamzaSearchInput" 
+            class="gamza-search-input" 
+            placeholder="동네 이름, 물품명 등을 검색해보세요" 
+            autocomplete="off"
+            aria-label="상품 및 동네 검색"
+          />
+          <button type="button" id="gamzaSearchClearBtn" class="gamza-search-clear" aria-label="검색어 지우기">✕</button>
+        </div>
+      </div>
+
+      <!-- 액션 버튼 (글쓰기 & 로그인) -->
+      <div class="gamza-header-actions">
+        <button type="button" class="gamza-btn-write" id="gamzaWriteBtn" aria-label="새 상품 등록하기">
+          <span aria-hidden="true">✏️</span>
+          <span class="btn-text">내 감자 팔기</span>
+        </button>
+        <button type="button" class="gamza-btn-login" id="gamzaLoginBtn">
+          로그인
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 영역 -->
+  <main class="gamza-container">
+    
+    <!-- ========================================================
+         2. 필터 영역 (카테고리 칩 + 거래가능 토글 + 정렬)
+         ======================================================== -->
+    <section class="gamza-filter-section" aria-label="상품 카테고리 및 필터">
+      <!-- 카테고리 칩 목록 -->
+      <div class="gamza-categories-wrapper">
+        <ul class="gamza-categories-list" role="tablist">
+          <li><button type="button" class="gamza-category-chip is-active" data-category="전체" role="tab" aria-selected="true">전체</button></li>
+          <li><button type="button" class="gamza-category-chip" data-category="디지털 기기" role="tab" aria-selected="false">디지털 기기</button></li>
+          <li><button type="button" class="gamza-category-chip" data-category="가구/인테리어" role="tab" aria-selected="false">가구/인테리어</button></li>
+          <li><button type="button" class="gamza-category-chip" data-category="의류" role="tab" aria-selected="false">의류</button></li>
+          <li><button type="button" class="gamza-category-chip" data-category="생활가전" role="tab" aria-selected="false">생활가전</button></li>
+          <li><button type="button" class="gamza-category-chip" data-category="도서/티켓" role="tab" aria-selected="false">도서/티켓</button></li>
+          <li><button type="button" class="gamza-category-chip" data-category="기타" role="tab" aria-selected="false">기타</button></li>
+        </ul>
+      </div>
+
+      <!-- 서브 필터 바 (상품 개수, 거래가능만 보기, 정렬 옵션) -->
+      <div class="gamza-filter-subbar">
+        <div class="gamza-product-count" id="gamzaProductCount">
+          총 <strong>8</strong>개의 감자
+        </div>
+
+        <div class="gamza-subbar-controls">
+          <!-- '거래가능만 보기' 스위치 -->
+          <label class="gamza-available-toggle" for="gamzaAvailableToggle">
+            <input type="checkbox" id="gamzaAvailableToggle" class="gamza-toggle-input" />
+            <span class="gamza-toggle-switch" aria-hidden="true"></span>
+            <span>거래가능만 보기</span>
+          </label>
+
+          <!-- 정렬 셀렉트박스 -->
+          <select id="gamzaSortSelect" class="gamza-sort-select" aria-label="상품 정렬 순서">
+            <option value="latest">최신순</option>
+            <option value="priceAsc">낮은 가격순</option>
+            <option value="priceDesc">높은 가격순</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         3. 상품 카드 그리드 영역
+         ======================================================== -->
+    <section class="gamza-products-section" aria-label="중고거래 상품 목록">
+      <div class="gamza-grid" id="gamzaProductGrid">
+        <!-- part1_list.js 에 의해 동적으로 렌더링됩니다 -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================
+       스크립트 로드
+       ======================================================== -->
+  <!-- 화면 3: 글쓰기 모달 스크립트 (모달 및 등록 이벤트 제공) -->
+  <script src="part3_write.js"></script>
+
+  <!-- 화면 1: 상품목록 렌더링 & 필터링 스크립트 -->
+  <script src="part1_list.js"></script>
+
+  <script>
+    // 화면 2(상세보기 모달) 연동 예시 리스너
+    window.addEventListener('gamza:product-click', function(e) {
+      console.log('🥔 [화면 1 -> 화면 2 이벤트 감지]:', e.detail);
+      // 향후 화면 2 담당자가 개발한 상세 모달이 있을 경우:
+      // window.openDetailModal(e.detail.productId);
+    });
+  </script>
+</body>
+</html>

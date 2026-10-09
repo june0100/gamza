@@ -1,0 +1,629 @@
+/* ========================================================
+   감자 마켓 (Gamza Market) - 화면 2: 상품 상세 모달 스타일
+   테마: 감자 브라운 포인트(#8D5B4C, #9C6644) & 웜톤 크림
+   ======================================================== */
+
+:root {
+  --gamza-brown-dark: #6F4E37;
+  --gamza-brown: #8D5B4C;
+  --gamza-brown-light: #9C6644;
+  --gamza-brown-hover: #7B4A3B;
+  --gamza-cream-bg: #FDFBF7;
+  --gamza-cream-surface: #FFFFFF;
+  --gamza-cream-light: #F7EFE5;
+  --gamza-cream-border: #E8D8C8;
+  --gamza-text-main: #3D2B1F;
+  --gamza-text-muted: #8C7A6B;
+  --gamza-text-light: #B5A496;
+  --gamza-danger: #D9534F;
+  --gamza-success: #5B8E55;
+  --gamza-warning: #E08732;
+  --gamza-shadow: 0 16px 40px rgba(111, 78, 55, 0.22);
+  --gamza-shadow-sm: 0 4px 12px rgba(111, 78, 55, 0.08);
+  --gamza-radius-lg: 20px;
+  --gamza-radius-md: 12px;
+  --gamza-radius-sm: 8px;
+  --gamza-radius-pill: 9999px;
+  --gamza-transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================================
+   1. 백드롭 & 모달 컨테이너
+   ======================================================== */
+.gamza-detail-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(61, 43, 31, 0.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.gamza-detail-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 데스크톱/태블릿 모달 창 */
+.gamza-detail-container {
+  position: relative;
+  background: var(--gamza-cream-bg);
+  border: 1px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-lg);
+  box-shadow: var(--gamza-shadow);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(24px) scale(0.96);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+  color: var(--gamza-text-main);
+  box-sizing: border-box;
+}
+
+.gamza-detail-overlay.is-active .gamza-detail-container {
+  transform: translateY(0) scale(1);
+}
+
+/* 상단 닫기 [✕] 플로팅 버튼 */
+.gamza-detail-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(232, 216, 200, 0.8);
+  color: var(--gamza-brown-dark);
+  font-size: 1.15rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(61, 43, 31, 0.15);
+  transition: var(--gamza-transition);
+}
+
+.gamza-detail-close-btn:hover {
+  background: #FFFFFF;
+  color: var(--gamza-danger);
+  transform: scale(1.08) rotate(90deg);
+}
+
+/* ========================================================
+   2. 내부 스크롤 영역
+   ======================================================== */
+.gamza-detail-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 스크롤바 미려한 커스텀 */
+.gamza-detail-scroll-area::-webkit-scrollbar {
+  width: 6px;
+}
+.gamza-detail-scroll-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+.gamza-detail-scroll-area::-webkit-scrollbar-thumb {
+  background: var(--gamza-cream-border);
+  border-radius: 10px;
+}
+.gamza-detail-scroll-area::-webkit-scrollbar-thumb:hover {
+  background: var(--gamza-brown-light);
+}
+
+/* ========================================================
+   3. 상단 상품 이미지 영역
+   ======================================================== */
+.gamza-detail-image-box {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  background-color: var(--gamza-cream-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.gamza-detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.gamza-detail-image-box:hover .gamza-detail-image {
+  transform: scale(1.02);
+}
+
+/* 이미지 위 상태 배지 */
+.gamza-detail-status-badge {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  padding: 6px 14px;
+  border-radius: var(--gamza-radius-pill);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+  z-index: 2;
+  transition: var(--gamza-transition);
+}
+
+/* 배지 종류별 색상 */
+.gamza-detail-status-badge.status-selling {
+  background-color: #2F855A;
+  color: #FFFFFF;
+}
+.gamza-detail-status-badge.status-reserved {
+  background-color: #D97706;
+  color: #FFFFFF;
+}
+.gamza-detail-status-badge.status-completed {
+  background-color: #6B7280;
+  color: #F3F4F6;
+}
+
+/* ========================================================
+   4. 상세 본문 컨텐츠
+   ======================================================== */
+.gamza-detail-content {
+  padding: 22px 24px 28px 24px;
+  background-color: var(--gamza-cream-bg);
+}
+
+/* 판매자 프로필 카드 */
+.gamza-detail-seller-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background-color: var(--gamza-cream-surface);
+  border: 1px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-md);
+  box-shadow: var(--gamza-shadow-sm);
+  margin-bottom: 20px;
+}
+
+.gamza-seller-info-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gamza-seller-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--gamza-cream-border);
+  background-color: var(--gamza-cream-light);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gamza-seller-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gamza-seller-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gamza-seller-nickname {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gamza-brown-dark);
+}
+
+.gamza-seller-region {
+  font-size: 0.82rem;
+  color: var(--gamza-text-muted);
+}
+
+/* 매너 감자 / 온도 뱃지 */
+.gamza-seller-manner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.gamza-manner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gamza-manner-temp {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--gamza-brown);
+}
+
+.gamza-manner-icon {
+  font-size: 1.1rem;
+}
+
+.gamza-manner-bar-bg {
+  width: 68px;
+  height: 5px;
+  background-color: #EADBC8;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.gamza-manner-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #DDB892, #8D5B4C);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.gamza-manner-label {
+  font-size: 0.72rem;
+  color: var(--gamza-text-muted);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+/* 구분선 */
+.gamza-detail-divider {
+  border: 0;
+  height: 1px;
+  background-color: var(--gamza-cream-border);
+  margin: 18px 0;
+}
+
+/* 카테고리 & 시간 메타 태그 */
+.gamza-detail-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  color: var(--gamza-text-muted);
+  margin-bottom: 8px;
+}
+
+.gamza-detail-category {
+  font-weight: 600;
+  color: var(--gamza-brown-light);
+}
+
+.gamza-meta-dot {
+  color: var(--gamza-text-light);
+}
+
+.gamza-detail-time {
+  color: var(--gamza-text-muted);
+}
+
+/* 상품명 */
+.gamza-detail-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--gamza-text-main);
+  margin: 0 0 12px 0;
+  word-break: break-word;
+}
+
+/* 가격 */
+.gamza-detail-pricing-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.gamza-detail-price {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: var(--gamza-brown-dark);
+  letter-spacing: -0.5px;
+}
+
+.gamza-detail-free-badge {
+  display: inline-block;
+  background-color: var(--gamza-success);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--gamza-radius-sm);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* 거래 희망 장소 */
+.gamza-detail-location-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--gamza-cream-light);
+  border: 1px solid var(--gamza-cream-border);
+  padding: 10px 14px;
+  border-radius: var(--gamza-radius-md);
+  margin-bottom: 20px;
+  font-size: 0.92rem;
+}
+
+.gamza-loc-icon {
+  font-size: 1.05rem;
+  color: var(--gamza-brown);
+}
+
+.gamza-loc-label {
+  font-weight: 600;
+  color: var(--gamza-brown-dark);
+}
+
+.gamza-detail-location {
+  color: var(--gamza-text-main);
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* 상품 설명 (여러 줄 줄바꿈 보존) */
+.gamza-detail-desc-box {
+  background: var(--gamza-cream-surface);
+  border: 1px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-md);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  min-height: 90px;
+}
+
+.gamza-detail-description {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: var(--gamza-text-main);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 하단 관심/채팅 통계 텍스트 */
+.gamza-detail-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--gamza-text-light);
+}
+
+/* ========================================================
+   5. 모달 하단 액션 바 (Sticky / Fixed)
+   ======================================================== */
+.gamza-detail-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background-color: var(--gamza-cream-surface);
+  border-top: 1px solid var(--gamza-cream-border);
+  box-shadow: 0 -4px 16px rgba(111, 78, 55, 0.05);
+  z-index: 5;
+}
+
+/* 관심 추가 버튼 */
+.gamza-detail-like-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--gamza-cream-border);
+  background-color: var(--gamza-cream-bg);
+  border-radius: var(--gamza-radius-md);
+  padding: 8px 16px;
+  min-width: 62px;
+  height: 50px;
+  cursor: pointer;
+  color: var(--gamza-text-muted);
+  transition: var(--gamza-transition);
+  box-sizing: border-box;
+}
+
+.gamza-detail-like-btn:hover {
+  background-color: var(--gamza-cream-light);
+  border-color: var(--gamza-brown-light);
+  color: var(--gamza-brown);
+}
+
+.gamza-detail-like-btn .gamza-like-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gamza-detail-like-btn .gamza-like-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* 관심 활성화 상태 */
+.gamza-detail-like-btn.is-liked {
+  border-color: #E57373;
+  background-color: #FFF5F5;
+  color: #D32F2F;
+}
+
+.gamza-detail-like-btn.is-liked .gamza-like-icon {
+  transform: scale(1.2);
+  color: #E53935;
+}
+
+/* 액션 바 미니 가격 표시 (화면 넓을 때 또는 모바일) */
+.gamza-detail-price-mini {
+  display: flex;
+  flex-direction: column;
+  padding-left: 4px;
+}
+
+.gamza-mini-price-val {
+  font-size: 1.18rem;
+  font-weight: 800;
+  color: var(--gamza-brown-dark);
+  letter-spacing: -0.3px;
+}
+
+/* 채팅 시작하기 버튼 */
+.gamza-detail-chat-btn {
+  flex: 1;
+  height: 50px;
+  background-color: var(--gamza-brown);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--gamza-radius-md);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(141, 91, 76, 0.35);
+  transition: var(--gamza-transition);
+}
+
+.gamza-detail-chat-btn:hover {
+  background-color: var(--gamza-brown-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(141, 91, 76, 0.45);
+}
+
+.gamza-detail-chat-btn:active {
+  transform: translateY(0);
+}
+
+.gamza-chat-icon {
+  font-size: 1.15rem;
+}
+
+/* ========================================================
+   6. 알림 토스트 (Toast)
+   ======================================================== */
+.gamza-detail-toast {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: rgba(61, 43, 31, 0.94);
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: var(--gamza-radius-pill);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10001;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.gamza-detail-toast.is-show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ========================================================
+   7. 모바일 반응형 최적화 (Bottom Sheet 형태)
+   ======================================================== */
+@media (max-width: 640px) {
+  .gamza-detail-overlay {
+    padding: 0;
+    align-items: flex-end; /* 아래에서 올라오는 바텀 시트 */
+  }
+
+  .gamza-detail-container {
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 24px 24px 0 0;
+    border-bottom: none;
+    transform: translateY(100%); /* 모바일 슬라이드 업 */
+    transition: transform 0.32s cubic-bezier(0.2, 0.9, 0.3, 1);
+  }
+
+  .gamza-detail-overlay.is-active .gamza-detail-container {
+    transform: translateY(0);
+  }
+
+  /* 바텀 시트 상단 드래그 핸들 느낌 추가 */
+  .gamza-detail-container::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 4px;
+    background-color: rgba(232, 216, 200, 0.9);
+    border-radius: 99px;
+    z-index: 11;
+  }
+
+  .gamza-detail-image-box {
+    height: 260px;
+  }
+
+  .gamza-detail-content {
+    padding: 18px 18px 24px 18px;
+  }
+
+  .gamza-detail-title {
+    font-size: 1.25rem;
+  }
+
+  .gamza-detail-price {
+    font-size: 1.45rem;
+  }
+
+  .gamza-detail-action-bar {
+    padding: 12px 16px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+
+  .gamza-detail-price-mini {
+    display: none; /* 모바일에서는 채팅 버튼 넓게 확보 */
+  }
+
+  .gamza-detail-toast {
+    bottom: 96px;
+  }
+}

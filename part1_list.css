@@ -1,0 +1,751 @@
+/* ========================================================
+   감자 마켓 (Gamza Market) - 화면 1: 상품목록 스타일
+   테마: 따뜻한 감자 웜톤 브라운 포인트 & 포근한 크림 배경
+   ======================================================== */
+
+:root {
+  /* 브랜드 & 메인 컬러 */
+  --gamza-brown-dark: #6F4E37;
+  --gamza-brown: #8D5B4C;
+  --gamza-brown-light: #9C6644;
+  --gamza-brown-hover: #7B4A3B;
+  --gamza-cream-bg: #FAF7F2;
+  --gamza-cream-surface: #FFFFFF;
+  --gamza-cream-light: #F7EFE5;
+  --gamza-cream-border: #E8D8C8;
+  --gamza-border-subtle: #EFE6DD;
+
+  /* 텍스트 컬러 */
+  --gamza-text-main: #3D2B1F;
+  --gamza-text-muted: #8C7A6B;
+  --gamza-text-subtle: #AFA297;
+
+  /* 판매 상태 배지 컬러 */
+  --badge-selling-bg: #E8F5E9;
+  --badge-selling-color: #2E7D32;
+  --badge-reserved-bg: #FEF3C7;
+  --badge-reserved-color: #B45309;
+  --badge-completed-bg: #F3F4F6;
+  --badge-completed-color: #6B7280;
+
+  /* 그림자 & 라운드 */
+  --gamza-radius-lg: 16px;
+  --gamza-radius-md: 12px;
+  --gamza-radius-sm: 8px;
+  --gamza-radius-pill: 9999px;
+  --gamza-shadow-sm: 0 2px 8px rgba(111, 78, 55, 0.06);
+  --gamza-shadow-md: 0 6px 18px rgba(111, 78, 55, 0.08);
+  --gamza-shadow-hover: 0 12px 28px rgba(111, 78, 55, 0.14);
+
+  /* 트랜지션 */
+  --gamza-transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 기본 레이아웃 리셋 & 폰트 */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--gamza-cream-bg);
+  color: var(--gamza-text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 컨테이너 */
+.gamza-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ========================================================
+   1. 헤더 GNB (Global Navigation Bar)
+   ======================================================== */
+.gamza-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--gamza-cream-border);
+  box-shadow: 0 2px 10px rgba(111, 78, 55, 0.04);
+}
+
+.gamza-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  gap: 20px;
+}
+
+/* 로고 */
+.gamza-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--gamza-brown);
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: var(--gamza-transition);
+}
+
+.gamza-logo:hover {
+  transform: scale(1.02);
+}
+
+.gamza-logo-emoji {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.gamza-logo-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: var(--gamza-cream-light);
+  color: var(--gamza-brown-dark);
+  padding: 2px 7px;
+  border-radius: var(--gamza-radius-pill);
+  border: 1px solid var(--gamza-cream-border);
+  margin-left: 2px;
+}
+
+/* 검색창 */
+.gamza-search-wrapper {
+  flex: 1;
+  max-width: 520px;
+  position: relative;
+}
+
+.gamza-search-bar {
+  display: flex;
+  align-items: center;
+  background-color: var(--gamza-cream-bg);
+  border: 1.5px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-pill);
+  padding: 8px 16px;
+  transition: var(--gamza-transition);
+}
+
+.gamza-search-bar:focus-within {
+  border-color: var(--gamza-brown);
+  background-color: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(141, 91, 76, 0.15);
+}
+
+.gamza-search-icon {
+  font-size: 1rem;
+  color: var(--gamza-text-muted);
+  margin-right: 10px;
+  user-select: none;
+}
+
+.gamza-search-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  color: var(--gamza-text-main);
+  font-family: inherit;
+}
+
+.gamza-search-input::placeholder {
+  color: var(--gamza-text-muted);
+  font-weight: 400;
+}
+
+.gamza-search-clear {
+  background: none;
+  border: none;
+  color: var(--gamza-text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  display: none;
+  line-height: 1;
+}
+
+.gamza-search-clear:hover {
+  color: var(--gamza-text-main);
+  background-color: var(--gamza-cream-light);
+}
+
+/* 헤더 액션 버튼 */
+.gamza-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.gamza-btn-write {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--gamza-brown);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--gamza-radius-md);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+  box-shadow: 0 4px 12px rgba(141, 91, 76, 0.25);
+  font-family: inherit;
+}
+
+.gamza-btn-write:hover {
+  background-color: var(--gamza-brown-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(141, 91, 76, 0.35);
+}
+
+.gamza-btn-write:active {
+  transform: translateY(0);
+}
+
+.gamza-btn-login {
+  display: inline-flex;
+  align-items: center;
+  background-color: transparent;
+  color: var(--gamza-brown-dark);
+  border: 1px solid var(--gamza-cream-border);
+  padding: 9px 16px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: var(--gamza-radius-md);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+  font-family: inherit;
+}
+
+.gamza-btn-login:hover {
+  background-color: var(--gamza-cream-light);
+  border-color: var(--gamza-brown-light);
+}
+
+/* ========================================================
+   2. 필터 & 컨트롤 영역 (카테고리 + 거래가능 토글 + 정렬)
+   ======================================================== */
+.gamza-filter-section {
+  padding: 24px 0 16px;
+  border-bottom: 1px solid var(--gamza-border-subtle);
+}
+
+/* 카테고리 가로 스크롤 리스트 */
+.gamza-categories-wrapper {
+  overflow-x: auto;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gamza-categories-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.gamza-categories-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.gamza-category-chip {
+  background-color: #FFFFFF;
+  border: 1px solid var(--gamza-cream-border);
+  color: var(--gamza-text-muted);
+  font-size: 0.92rem;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: var(--gamza-radius-pill);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+  user-select: none;
+  font-family: inherit;
+}
+
+.gamza-category-chip:hover {
+  border-color: var(--gamza-brown-light);
+  color: var(--gamza-brown);
+  background-color: var(--gamza-cream-light);
+}
+
+.gamza-category-chip.is-active {
+  background-color: var(--gamza-brown);
+  border-color: var(--gamza-brown);
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(141, 91, 76, 0.22);
+}
+
+/* 필터 서브 바: 카운트 / 토글 스위치 / 정렬 */
+.gamza-filter-subbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 18px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.gamza-product-count {
+  font-size: 0.95rem;
+  color: var(--gamza-text-muted);
+}
+
+.gamza-product-count strong {
+  color: var(--gamza-brown);
+  font-weight: 700;
+}
+
+.gamza-subbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* '거래가능만 보기' 커스텀 토글 스위치 */
+.gamza-available-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--gamza-text-main);
+}
+
+.gamza-toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: #D1C7BD;
+  border-radius: var(--gamza-radius-pill);
+  transition: var(--gamza-transition);
+}
+
+.gamza-toggle-switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: var(--gamza-transition);
+}
+
+.gamza-toggle-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.gamza-toggle-input:checked + .gamza-toggle-switch {
+  background-color: var(--gamza-brown);
+}
+
+.gamza-toggle-input:checked + .gamza-toggle-switch::after {
+  transform: translateX(20px);
+}
+
+/* 정렬 드롭다운 */
+.gamza-sort-select {
+  border: 1px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-sm);
+  background-color: #FFFFFF;
+  color: var(--gamza-text-main);
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: var(--gamza-transition);
+}
+
+.gamza-sort-select:hover, .gamza-sort-select:focus {
+  border-color: var(--gamza-brown);
+}
+
+/* ========================================================
+   3. 상품 카드 그리드 영역
+   ======================================================== */
+.gamza-products-section {
+  padding: 28px 0 60px;
+}
+
+.gamza-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+/* 개별 상품 카드 */
+.gamza-card {
+  background: var(--gamza-cream-surface);
+  border: 1px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--gamza-shadow-sm);
+  transition: var(--gamza-transition);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.gamza-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--gamza-shadow-hover);
+  border-color: var(--gamza-brown-light);
+}
+
+/* 카드 썸네일 이미지 영역 */
+.gamza-card-thumb-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* 4:3 비율 */
+  background-color: var(--gamza-cream-light);
+  overflow: hidden;
+}
+
+.gamza-card-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.gamza-card:hover .gamza-card-thumb {
+  transform: scale(1.05);
+}
+
+/* 거래 완료 시 이미지 딤 오버레이 */
+.gamza-card.is-completed .gamza-card-thumb {
+  filter: grayscale(85%) opacity(70%);
+}
+
+.gamza-card-completed-overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background-color: rgba(61, 43, 31, 0.45);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 1.05rem;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.3px;
+}
+
+.gamza-card.is-completed .gamza-card-completed-overlay {
+  display: flex;
+}
+
+/* 좋아요(찜) 버튼 (카드 우측 상단) */
+.gamza-card-like-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gamza-text-muted);
+  font-size: 1rem;
+  transition: var(--gamza-transition);
+  z-index: 2;
+}
+
+.gamza-card-like-btn:hover {
+  background: #FFFFFF;
+  color: #E03131;
+  transform: scale(1.1);
+}
+
+.gamza-card-like-btn.is-active {
+  color: #E03131;
+  background: #FFFFFF;
+}
+
+/* 카드 본문 */
+.gamza-card-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* 상태 배지 & 카테고리 태그 */
+.gamza-card-top-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.gamza-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.gamza-status-badge.status-selling {
+  background-color: var(--badge-selling-bg);
+  color: var(--badge-selling-color);
+}
+
+.gamza-status-badge.status-reserved {
+  background-color: var(--badge-reserved-bg);
+  color: var(--badge-reserved-color);
+}
+
+.gamza-status-badge.status-completed {
+  background-color: var(--badge-completed-bg);
+  color: var(--badge-completed-color);
+}
+
+.gamza-card-category-tag {
+  font-size: 0.78rem;
+  color: var(--gamza-text-muted);
+}
+
+/* 상품 제목 */
+.gamza-card-title {
+  margin: 0 0 6px 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--gamza-text-main);
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 위치 & 시간 메타 */
+.gamza-card-sub-meta {
+  font-size: 0.82rem;
+  color: var(--gamza-text-muted);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gamza-card-sub-meta .meta-dot {
+  font-size: 0.7rem;
+  color: var(--gamza-text-subtle);
+}
+
+/* 가격 & 반응(채팅, 찜) */
+.gamza-card-bottom {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px dashed var(--gamza-border-subtle);
+}
+
+.gamza-card-price {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--gamza-text-main);
+  letter-spacing: -0.3px;
+}
+
+.gamza-card-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--gamza-text-muted);
+}
+
+.gamza-card-stat-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* ========================================================
+   4. 빈 결과 (Empty State) UI
+   ======================================================== */
+.gamza-empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #FFFFFF;
+  border: 1px dashed var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-lg);
+  margin: 20px 0;
+  grid-column: 1 / -1;
+}
+
+.gamza-empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+  display: inline-block;
+  animation: potatoBounce 2s infinite ease-in-out;
+}
+
+@keyframes potatoBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.gamza-empty-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gamza-brown-dark);
+  margin: 0 0 8px 0;
+}
+
+.gamza-empty-desc {
+  font-size: 0.95rem;
+  color: var(--gamza-text-muted);
+  margin: 0 0 20px 0;
+}
+
+.gamza-empty-reset-btn {
+  background-color: var(--gamza-brown);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: var(--gamza-radius-md);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+}
+
+.gamza-empty-reset-btn:hover {
+  background-color: var(--gamza-brown-hover);
+}
+
+/* ========================================================
+   5. 반응형 미디어 쿼리 (Mobile & Tablet)
+   ======================================================== */
+/* 태블릿 (최대 1024px): 3열 그리드 */
+@media (max-width: 1024px) {
+  .gamza-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+/* 작은 태블릿 & 큰 모바일 (최대 768px): 2열 그리드 */
+@media (max-width: 768px) {
+  .gamza-header-inner {
+    height: 64px;
+    gap: 12px;
+  }
+
+  .gamza-logo {
+    font-size: 1.25rem;
+  }
+
+  .gamza-logo-badge {
+    display: none;
+  }
+
+  .gamza-btn-write span.btn-text {
+    display: none; /* 아이콘만 노출 */
+  }
+
+  .gamza-btn-write {
+    padding: 8px 12px;
+  }
+
+  .gamza-btn-login {
+    padding: 8px 12px;
+    font-size: 0.88rem;
+  }
+
+  .gamza-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .gamza-card-body {
+    padding: 12px 14px 14px;
+  }
+
+  .gamza-card-title {
+    font-size: 0.95rem;
+  }
+
+  .gamza-card-price {
+    font-size: 1.05rem;
+  }
+}
+
+/* 초소형 모바일 (최대 480px): 1열 or 콤팩트 2열 */
+@media (max-width: 480px) {
+  .gamza-container {
+    padding: 0 14px;
+  }
+
+  .gamza-header-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 0;
+    gap: 10px;
+  }
+
+  .gamza-search-wrapper {
+    order: 3;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .gamza-filter-subbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .gamza-subbar-controls {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .gamza-grid {
+    grid-template-columns: repeat(2, 1fr); /* 모바일에서도 2열 카드 그리드로 세련되게 */
+    gap: 12px;
+  }
+}

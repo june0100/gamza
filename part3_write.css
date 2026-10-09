@@ -1,0 +1,519 @@
+/* ========================================================
+   감자 마켓 (Gamza Market) - 화면 3: 글쓰기 모달 스타일
+   테마: 감자 브라운 포인트 & 웜톤 크림
+   ======================================================== */
+
+:root {
+  --gamza-brown-dark: #6F4E37;
+  --gamza-brown: #8D5B4C;
+  --gamza-brown-light: #9C6644;
+  --gamza-brown-hover: #7B4A3B;
+  --gamza-cream-bg: #FDFBF7;
+  --gamza-cream-light: #F7EFE5;
+  --gamza-cream-border: #E8D8C8;
+  --gamza-text-main: #3D2B1F;
+  --gamza-text-muted: #8C7A6B;
+  --gamza-danger: #D9534F;
+  --gamza-success: #5B8E55;
+  --gamza-shadow: 0 12px 36px rgba(111, 78, 55, 0.18);
+  --gamza-radius-lg: 18px;
+  --gamza-radius-md: 10px;
+  --gamza-radius-sm: 6px;
+  --gamza-transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 모달 오버레이 */
+.gamza-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(61, 43, 31, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.gamza-modal-overlay.is-active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* 모달 윈도우 */
+.gamza-modal-container {
+  background: var(--gamza-cream-bg);
+  border: 1px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-lg);
+  box-shadow: var(--gamza-shadow);
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(20px) scale(0.97);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR", sans-serif;
+  color: var(--gamza-text-main);
+  box-sizing: border-box;
+}
+
+.gamza-modal-overlay.is-active .gamza-modal-container {
+  transform: translateY(0) scale(1);
+}
+
+/* 모달 헤더 */
+.gamza-modal-header {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--gamza-cream-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+}
+
+.gamza-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gamza-brown-dark);
+  margin: 0;
+}
+
+.gamza-modal-title .gamza-icon {
+  font-size: 1.35rem;
+}
+
+.gamza-modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--gamza-text-muted);
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: var(--gamza-transition);
+}
+
+.gamza-modal-close-btn:hover {
+  background-color: var(--gamza-cream-light);
+  color: var(--gamza-brown-dark);
+}
+
+/* 모달 본문 (스크롤) */
+.gamza-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gamza-modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+.gamza-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.gamza-modal-body::-webkit-scrollbar-thumb {
+  background: #DAC3B1;
+  border-radius: 4px;
+}
+.gamza-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--gamza-brown-light);
+}
+
+/* 폼 그룹 공통 */
+.gamza-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gamza-form-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--gamza-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gamza-required {
+  color: var(--gamza-danger);
+  margin-left: 3px;
+}
+
+/* 입력 필드 기본 */
+.gamza-input,
+.gamza-select,
+.gamza-textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-md);
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: var(--gamza-text-main);
+  outline: none;
+  transition: var(--gamza-transition);
+  font-family: inherit;
+}
+
+.gamza-input::placeholder,
+.gamza-textarea::placeholder {
+  color: #B8A89A;
+}
+
+.gamza-input:focus,
+.gamza-select:focus,
+.gamza-textarea:focus {
+  border-color: var(--gamza-brown);
+  box-shadow: 0 0 0 3px rgba(156, 102, 68, 0.15);
+  background-color: #FFFFFF;
+}
+
+/* 이미지 업로드 영역 */
+.gamza-image-upload-wrapper {
+  background-color: #FFFFFF;
+  border: 1.5px dashed var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: var(--gamza-transition);
+}
+
+.gamza-image-upload-wrapper.is-dragover {
+  border-color: var(--gamza-brown);
+  background-color: var(--gamza-cream-light);
+}
+
+.gamza-image-action-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.gamza-file-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--gamza-cream-light);
+  color: var(--gamza-brown-dark);
+  border: 1px solid var(--gamza-cream-border);
+  padding: 9px 14px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: var(--gamza-radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--gamza-transition);
+}
+
+.gamza-file-btn:hover {
+  background-color: #ECD8C6;
+  border-color: var(--gamza-brown-light);
+}
+
+.gamza-image-url-input {
+  flex: 1;
+}
+
+/* 이미지 미리보기 박스 */
+.gamza-preview-container {
+  display: none;
+  position: relative;
+  width: 100%;
+  max-width: 220px;
+  height: 160px;
+  border-radius: var(--gamza-radius-md);
+  overflow: hidden;
+  border: 1px solid var(--gamza-cream-border);
+  background-color: #F8F5F1;
+}
+
+.gamza-preview-container.has-image {
+  display: block;
+}
+
+.gamza-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gamza-preview-remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: rgba(61, 43, 31, 0.75);
+  color: #FFFFFF;
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  backdrop-filter: blur(2px);
+  transition: var(--gamza-transition);
+}
+
+.gamza-preview-remove-btn:hover {
+  background-color: var(--gamza-danger);
+  transform: scale(1.05);
+}
+
+/* 가격 입력 영역 */
+.gamza-price-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.gamza-price-currency {
+  position: absolute;
+  left: 14px;
+  font-weight: 700;
+  color: var(--gamza-brown-dark);
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.gamza-price-input {
+  padding-left: 32px;
+  padding-right: 48px;
+}
+
+.gamza-price-unit {
+  position: absolute;
+  right: 14px;
+  color: var(--gamza-text-muted);
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.gamza-price-quick-tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.gamza-badge-chip {
+  background-color: var(--gamza-cream-light);
+  border: 1px solid var(--gamza-cream-border);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: var(--gamza-brown-dark);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+}
+
+.gamza-badge-chip:hover {
+  background-color: #ECD8C6;
+  border-color: var(--gamza-brown-light);
+}
+
+/* 판매 상태 라디오 그룹 */
+.gamza-status-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.gamza-status-option {
+  position: relative;
+}
+
+.gamza-status-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.gamza-status-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #FFFFFF;
+  border: 1.5px solid var(--gamza-cream-border);
+  border-radius: var(--gamza-radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gamza-text-muted);
+  cursor: pointer;
+  transition: var(--gamza-transition);
+  text-align: center;
+}
+
+.gamza-status-option input[type="radio"]:checked + .gamza-status-card {
+  background-color: var(--gamza-cream-light);
+  border-color: var(--gamza-brown);
+  color: var(--gamza-brown-dark);
+  box-shadow: 0 2px 6px rgba(141, 91, 76, 0.12);
+}
+
+.gamza-status-card:hover {
+  border-color: var(--gamza-brown-light);
+}
+
+/* 설명 입력 및 글자 수 카운터 */
+.gamza-textarea {
+  resize: vertical;
+  min-height: 110px;
+  line-height: 1.5;
+}
+
+.gamza-char-counter {
+  font-size: 0.8rem;
+  color: var(--gamza-text-muted);
+  text-align: right;
+  margin-top: 2px;
+}
+
+/* 모달 푸터 버튼 */
+.gamza-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--gamza-cream-border);
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.gamza-btn {
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--gamza-radius-md);
+  cursor: pointer;
+  border: none;
+  transition: var(--gamza-transition);
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.gamza-btn-cancel {
+  background-color: var(--gamza-cream-light);
+  color: var(--gamza-text-main);
+  border: 1px solid var(--gamza-cream-border);
+}
+
+.gamza-btn-cancel:hover {
+  background-color: #ECD8C6;
+  color: var(--gamza-brown-dark);
+}
+
+.gamza-btn-submit {
+  background-color: var(--gamza-brown);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(141, 91, 76, 0.28);
+}
+
+.gamza-btn-submit:hover {
+  background-color: var(--gamza-brown-hover);
+  box-shadow: 0 6px 16px rgba(141, 91, 76, 0.35);
+  transform: translateY(-1px);
+}
+
+.gamza-btn-submit:active {
+  transform: translateY(0);
+}
+
+/* 토스트 메시지 스타일 */
+.gamza-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(40px);
+  background-color: #3D2B1F;
+  color: #FFF;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  z-index: 10001;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gamza-toast.is-show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.gamza-toast.error {
+  background-color: #BA3C2A;
+}
+
+.gamza-toast.success {
+  background-color: #4C7C43;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 640px) {
+  .gamza-modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .gamza-modal-container {
+    max-width: 100%;
+    max-height: 92vh;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    transform: translateY(100%);
+  }
+
+  .gamza-modal-overlay.is-active .gamza-modal-container {
+    transform: translateY(0);
+  }
+
+  .gamza-modal-header {
+    padding: 16px 20px;
+  }
+
+  .gamza-modal-body {
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .gamza-modal-footer {
+    padding: 14px 18px;
+  }
+
+  .gamza-modal-footer .gamza-btn {
+    flex: 1;
+  }
+}

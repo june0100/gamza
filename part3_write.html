@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>감자 마켓 - 글쓰기(화면 3) 테스트</title>
+  <link rel="stylesheet" href="part3_write.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", sans-serif;
+      background-color: #F8F5F0;
+      color: #3D2B1F;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .demo-card {
+      background: #FFFFFF;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(111, 78, 55, 0.08);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #6F4E37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    p {
+      color: #8C7A6B;
+      line-height: 1.6;
+    }
+
+    .open-modal-btn {
+      background-color: #8D5B4C;
+      color: #FFF;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(141, 91, 76, 0.3);
+      transition: all 0.2s;
+    }
+
+    .open-modal-btn:hover {
+      background-color: #7B4A3B;
+      transform: translateY(-2px);
+    }
+
+    .result-box {
+      margin-top: 30px;
+      text-align: left;
+      background: #FAF7F2;
+      border: 1px solid #E8D8C8;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 0.88rem;
+    }
+
+    .result-box pre {
+      margin: 0;
+      overflow-x: auto;
+      color: #4A3525;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-card">
+    <h1><span>🥔</span> 감자 마켓 글쓰기 테스트</h1>
+    <p>아래 버튼을 눌러 새 상품 등록 글쓰기 모달을 열고 상품을 등록해보세요.</p>
+    <button class="open-modal-btn" onclick="window.openWriteModal()">+ 내 물건 팔기 (글쓰기 열기)</button>
+
+    <div class="result-box">
+      <strong>최근 등록된 상품 데이터:</strong>
+      <pre id="latestResult">// 새 상품을 등록하면 여기에 JSON 데이터가 표시됩니다.</pre>
+    </div>
+  </div>
+
+  <!-- 파트3 자바스크립트 로드 -->
+  <script src="part3_write.js"></script>
+  <script>
+    // 상품 등록 시 이벤트 수신 예시
+    window.onProductCreated = function(product) {
+      console.log('새 상품 등록 수신:', product);
+      document.getElementById('latestResult').textContent = JSON.stringify(product, null, 2);
+    };
+
+    // 또는 커스텀 이벤트 리스너 방식 예시
+    window.addEventListener('gamza:product-created', function(e) {
+      console.log('이벤트 기반 수신:', e.detail);
+    });
+  </script>
+</body>
+</html>
