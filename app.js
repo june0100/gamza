@@ -114,6 +114,23 @@
         location: "서초구 양재동",
         mannerTemp: "42.0℃"
       }
+    },
+    {
+      id: 7,
+      title: "강아지 원목 식기 & 푹신한 마약방석 세트 (소형견용)",
+      category: "반려동물 용품",
+      price: 18000,
+      location: "신사동",
+      time: "5시간 전",
+      status: "판매중",
+      image: "https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?w=800&auto=format&fit=crop&q=80",
+      description: "저희 집 강아지가 금방 커서 더 큰 방석으로 바꾸게 되어 내놓습니다. 커버 분리 세탁 완료했고 오염 없이 깨끗합니다! 2구 원목 식기도 함께 드려요.",
+      seller: {
+        nickname: "댕댕이감자",
+        avatar: "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?w=120&auto=format&fit=crop&q=80",
+        location: "강남구 신사동",
+        mannerTemp: "39.8℃"
+      }
     }
   ];
 
